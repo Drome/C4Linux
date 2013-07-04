@@ -25,3 +25,6 @@ unix:!symbian {
     }
     INSTALLS += target
 }
+
+unix: CONFIG += link_pkgconfig
+unix: PKGCONFIG += zlib

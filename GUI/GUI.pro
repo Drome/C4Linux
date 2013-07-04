@@ -41,6 +41,9 @@ unix:!macx: PRE_TARGETDEPS += $$OUT_PWD/../MemFUSE/libMemFUSE.a
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += fuse
 
+unix: CONFIG += link_pkgconfig
+unix: PKGCONFIG += zlib
+
 unix|win32: LIBS += -L$$OUT_PWD/../C4Group/ -lC4Group
 
 INCLUDEPATH += $$PWD/../C4Group

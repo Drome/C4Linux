@@ -53,7 +53,7 @@ void InspectorDialog::unpackC4Grp() {
     FILE * f = fopen(c4finfo->absoluteFilePath().toStdString().c_str(), "rb");
 
     if(!f) throw io_error();
-    std::unique_ptr<unsigned char> buff = std::unique_ptr<unsigned char>(new unsigned char[fsize]); // Smart pointers + unsigned char buffers!
+    std::unique_ptr<unsigned char, std::default_delete<unsigned char[]>> buff(new unsigned char[fsize], std::default_delete<unsigned char[]>()); // Smart pointers + unsigned char buffers!
     if(fread(buff.get(),1,fsize,f) != fsize) throw io_error();
     if(ferror(f)) throw io_error();
     fclose(f);
