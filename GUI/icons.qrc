@@ -1,0 +1,26 @@
+<RCC>
+    <qresource prefix="/icons/fileIcons">
+        <file>c4d.png</file>
+        <file>c4f.png</file>
+        <file>c4g.png</file>
+        <file>c4k.png</file>
+        <file>c4p.png</file>
+        <file>c4s.png</file>
+        <file>c4u.png</file>
+        <file>cr.png</file>
+        <file>c4b.ico</file>
+        <file>c4i.ico</file>
+        <file>c4l.ico</file>
+        <file>c4m.ico</file>
+        <file>c4v.ico</file>
+        <file>c4x.ico</file>
+    </qresource>
+    <qresource prefix="/icons/windowIcons">
+        <file>dev.png</file>
+    </qresource>
+    <qresource prefix="/icons/toolbar">
+        <file>compress.png</file>
+        <file>extract.png</file>
+        <file>inspect.png</file>
+    </qresource>
+</RCC>
