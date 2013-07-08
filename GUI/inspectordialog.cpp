@@ -90,6 +90,8 @@ void InspectorDialog::setupVirtualFS() {
     addFunc(mountpath, c4group);
 
 }
+
+void InspectorDialog::destroyVirtualFS() {}
 #else
 void InspectorDialog::setupVirtualFS() {
     mountpath.append(VFS_TMP_DIR);
@@ -114,11 +116,11 @@ void InspectorDialog::setupVirtualFS() {
 
     memfs->mount();
 }
-#endif
 
 void InspectorDialog::destroyVirtualFS() {
     delete memfs;
 }
+#endif
 
 InspectorDialog::~InspectorDialog()
 {

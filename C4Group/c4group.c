@@ -459,7 +459,7 @@ void C4GROUP_removeFile(C4GroupFile_t * grp, char * name)
 	int j = 0;
     for(unsigned int i=0; i<grp->header.fileCount; i++)
 	{
-		if(i != found)
+        if(i != (unsigned long int) found)
 		{
 			memcpy(tFileArray + j * sizeof(C4File_t), grp->files + i * sizeof(C4File_t), sizeof(C4File_t));
 			j++;
@@ -511,7 +511,7 @@ void C4GROUP_removeGroup(C4GroupFile_t * grp, C4GroupFile_t * grp2)
 	int j = 0;
     for(unsigned int i=0; i<grp->header.groupCount; i++)
 	{
-		if(i != found)
+        if(i != (unsigned long int) found)
 		{
 			tGrpArray[j] = grp->groupFiles[i];
 			j++;
