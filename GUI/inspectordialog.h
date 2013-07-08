@@ -52,9 +52,9 @@ private:
     std::unique_ptr<FileSortFilterProxyModel> proxyModel;
     std::unique_ptr<QFileInfo> c4finfo;
     C4GroupFile_t *c4group;
+    QString mountpath;
 
     MemFUSE::MemFS *memfs;
-    QString mountpath;
 };
 
 #endif // INSPECTORDIALOG_H

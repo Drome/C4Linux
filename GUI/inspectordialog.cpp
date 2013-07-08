@@ -66,6 +66,31 @@ QString heuristicStrEncoding(char *str) {
     return QString(str);
 }
 
+#ifdef VALGRIND // Valgrind doesn't like FUSE filesystems, so this debugging version just writes everything to the harddisk
+void InspectorDialog::setupVirtualFS() {
+    mountpath.append(VFS_TMP_DIR);
+    mountpath.append(QString("%1_%2").arg(c4finfo->fileName()).arg(rand()));
+    mkdir(mountpath.toStdString().c_str(), 0777);
+
+    std::function<void(const QString,C4GroupFile_t *)> addFunc = [&addFunc](const QString path, C4GroupFile_t *grp) {
+        for(unsigned int i=0; i<grp->header.fileCount; i++) {
+            C4File_t f = grp->files[i];
+            QString fpath = path; fpath.append("/"); fpath.append(f.name);
+            FILE * rf = fopen(fpath.toStdString().c_str(), "wb");
+            fwrite(f.content, 1, f.size, rf);
+            fclose(rf);
+        }
+        for(unsigned int i=0; i<grp->header.groupCount; i++) {
+            C4GroupFile_t * subGrp = grp->groupFiles[i];
+            QString dpath = path; dpath.append("/"); dpath.append(subGrp->header.name);
+            mkdir(dpath.toStdString().c_str(), 0777);
+            addFunc(dpath, subGrp);
+        }
+    };
+    addFunc(mountpath, c4group);
+
+}
+#else
 void InspectorDialog::setupVirtualFS() {
     mountpath.append(VFS_TMP_DIR);
     mountpath.append(QString("%1_%2").arg(c4finfo->fileName()).arg(rand()));
@@ -89,6 +114,7 @@ void InspectorDialog::setupVirtualFS() {
 
     memfs->mount();
 }
+#endif
 
 void InspectorDialog::destroyVirtualFS() {
     delete memfs;
