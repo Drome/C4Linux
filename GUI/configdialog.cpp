@@ -7,6 +7,7 @@ ConfigDialog::ConfigDialog(QWidget *parent, Qt::WindowFlags flags) :
 {
     ui->setupUi(this);
     QSettings settings("Drome", "C4Linux");
+    ui->createBackupsCheckBox->setCheckState(settings.value("createbackups", true).toBool() ? Qt::Checked : Qt::Unchecked);
     ui->editPackedC4CheckBox->setCheckState(settings.value("editpackedc4", false).toBool() ? Qt::Checked : Qt::Unchecked);
     ui->clonkPathEdit->setText(settings.value("clonkpath").toString());
     ui->workPathEdit->setText(settings.value("workpath").toString());

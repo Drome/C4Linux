@@ -1,6 +1,10 @@
 #ifndef EDITORWINDOW_H
 #define EDITORWINDOW_H
 
+#include <cstdlib>
+#include <ctime>
+#include <exception>
+
 #include <QMainWindow>
 #include <QFileSystemModel>
 #include <QSettings>
@@ -11,11 +15,6 @@
 #include "configdialog.h"
 #include "inspectordialog.h"
 #include "c4fileiconprovider.h"
-
-#include <exception>
-extern "C" {
-#include <stdlib.h>
-}
 
 namespace Ui {
 class editorWindow;
@@ -37,6 +36,8 @@ private:
     C4FileIconProvider *iconProvider;
     QFileSystemModel *treeModel;
     FileSortFilterProxyModel *proxyModel;
+
+    QFileInfo getSelectedFileInfo();
 
 protected slots:
     void buttonStartClicked();

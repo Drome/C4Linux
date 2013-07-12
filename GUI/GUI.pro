@@ -16,13 +16,15 @@ SOURCES += main.cpp\
     configdialog.cpp \
     c4fileiconprovider.cpp \
     filesortfilterproxymodel.cpp \
-    inspectordialog.cpp
+    inspectordialog.cpp \
+    utilities.cpp
 
 HEADERS  += editorwindow.h \
     configdialog.h \
     c4fileiconprovider.h \
     filesortfilterproxymodel.h \
-    inspectordialog.h
+    inspectordialog.h \
+    utilities.h
 
 FORMS    += editorwindow.ui \
 		editorconfdiag.ui \
@@ -40,9 +42,8 @@ unix:!macx: PRE_TARGETDEPS += $$OUT_PWD/../MemFUSE/libMemFUSE.a
 
 unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += fuse
-
-unix: CONFIG += link_pkgconfig
 unix: PKGCONFIG += zlib
+unix: PKGCONFIG += icu-uc
 
 unix|win32: LIBS += -L$$OUT_PWD/../C4Group/ -lC4Group
 

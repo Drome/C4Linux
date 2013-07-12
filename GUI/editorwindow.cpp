@@ -115,20 +115,40 @@ void editorWindow::actionAboutActivated() {
     QMessageBox::about(this, "About C4Linux", "C4Linux");
 }
 
+QFileInfo editorWindow::getSelectedFileInfo() {
+    QModelIndexList mindl = ui->treeView->selectionModel()->selectedIndexes();
+    if(mindl.isEmpty()) return QFileInfo();
+    QFileInfo finfo = treeModel->fileInfo(proxyModel->mapToSource(mindl.first()));
+    if(!finfo.exists()) {
+        QMessageBox::information(0, "Inspector", "File does not exist. Invalid symlink maybe?", QMessageBox::Ok);
+        return QFileInfo();
+    }
+    return finfo;
+}
+
 void editorWindow::actionPackActivated() {
 
 }
 
 void editorWindow::actionUnpackActivated() {
-
+    QFileInfo finfo = getSelectedFileInfo();
+    if(!finfo.exists()) return;
+    if(!finfo.isFile()) {
+        QMessageBox::information(0, "Unpack", "This is a directory. You do not need to unpack directories.", QMessageBox::Ok);
+        return;
+    }
+    std::string targetPath = finfo.absoluteFilePath().toStdString();
+    std::string backupPath = finfo.absoluteFilePath().append(QString(".%1.bak").arg(time(NULL))).toStdString();
+    QMessageBox::information(0, "Inspector", QString::fromStdString(backupPath), QMessageBox::Ok);
+    rename(targetPath.c_str(), backupPath.c_str());
+    unpackC4GroupTo(QString::fromStdString(backupPath), QString::fromStdString(targetPath));
 }
 
 void editorWindow::actionInspectActivated() {
-    QModelIndexList mindl = ui->treeView->selectionModel()->selectedIndexes();
-    if(mindl.isEmpty()) return;
-    QFileInfo finfo = treeModel->fileInfo(proxyModel->mapToSource(mindl.first()));
-    if(!finfo.exists()) {
-        QMessageBox::information(0, "Inspector", "File does not exist. Invalid symlink maybe?", QMessageBox::Ok);
+    QFileInfo finfo = getSelectedFileInfo();
+    if(!finfo.exists()) return;
+    if(!finfo.isFile()) {
+        QMessageBox::information(0, "Inspector", "There is no need to inspect a directory.", QMessageBox::Ok);
         return;
     }
     try {

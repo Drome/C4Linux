@@ -8,6 +8,7 @@
 #include <QFileInfo>
 #include <QFileSystemModel>
 
+#include "utilities.h"
 #include "c4fileiconprovider.h"
 #include "filesortfilterproxymodel.h"
 
